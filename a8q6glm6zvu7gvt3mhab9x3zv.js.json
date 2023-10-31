@@ -1,5 +1,5 @@
 {
   "ctype": "application/javascript",
   "hex": false,
-  "body": "__babelPolyfillDefine%28%22evergreen.js%22%2C%5B%22shared.js%22%5D%2C%28function%28e%29%7B%22use%20strict%22return%7B%7D%7D%29%29//%23%20sourceMappingURL%3Dpolyfill-evergreen.map"
+  "body": "__babelPolyfillDefine%28%22evergreen.js%22%2C%5B%22shared.js%22%5D%2C%28function%28e%29%7B%22use%20strict%22%0Areturn%7B%7D%7D%29%29%0A%0A//%23%20sourceMappingURL%3Dpolyfill-evergreen.map"
 }
