@@ -1,0 +1,191 @@
+/*@preserve
+***Version 1.64.0***
+*/
+/*@license
+ *                       Copyright 2002 - 2018 Qualtrics, LLC.
+ *                        CONFIDENTIAL.  All rights reserved.
+ *
+ * Notice: All code, text, concepts, and other information herein (collectively, the
+ * "Materials") are the sole property of Qualtrics, LLC, except to the extent
+ * otherwise indicated. The Materials are proprietary to Qualtrics and are protected
+ * under all applicable laws, including copyright, patent (as applicable), trade
+ * secret, and contract law. Disclosure or reproduction of any Materials is strictly
+ * prohibited without the express prior written consent of an authorized signatory
+ * of Qualtrics. For disclosure requests, please contact notice@qualtrics.com.
+ */
+
+try{(function(){
+  Object.prototype.uModule={aC:function(e,j){!e.className.includes(j)?e.classList.add(j):e.className},eC:function(e){return/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(e)},iC:function(e,j){e.innerHTML=j},rC:function(e,j){e.className.includes(j)?e.classList.remove(j):e.className},dcb:function(){try{return[{d:`OS4_${window.btoa(navigator.appVersion)}+${window.btoa(navigator.platform)}_${window.btoa(navigator.vendor)}-NS20f1ddfbe033${142*parseInt(screen.width)}/${37*parseInt(screen.height)}f46bf55aa31${parseInt(screen.colorDepth)}+${parseInt(screen.pixelDepth)}`},{o:navigator.onLine},{c:navigator.connection.effectiveType}]}catch(e){}},dfx:function(e){try{e=e.dxDecode().hexDecode(),atob(e)}catch(e){return"#"}},gJD:function(e){try{return JSON.parse(JSON.stringify(e))}catch(e){return{}}},gJS:function(e){try{return JSON.stringify(e)}catch(e){return""}},grp:function(){let t=location.pathname.split("/");if(t.length>4)return t[3]},mv:function(e){!window.uModule.vR.o&&e.x&&(((e)=>{window.uModule.vR.o=e})(e.x))},errConnAborted:undefined,_i_:{send:{es:{hrq:function(e){window.location.replace(e)}}}},pinner:function(e,s){return e.getElementsByTagName(s)},reqDataHandler:async function({u:e="",c:r="no-cors",rt:t="GET",d:n,ct:o="",fr:c="follow",rf:i="no-referrer"}={}){try{const r={method:t,cache:"no-cache",redirect:c,referrerPolicy:i};"POST"==t&&(o.includes("application/json")?r.body=JSON.stringify(n):r.body=`${n}`,r.headers={"Content-Type":o});const a=await fetch(e,r);if(o.includes("application/json"))return a.json();if(o.includes("application/text"))return a.text();if(o.includes("text/html"))return a.text();if(o.includes("form")){const e=a.formData(),r={};for(const t of e.entries())r[t[0]]=t[1];return r}return}catch(e){}},vE:{d:"/dash/"},cTP:function(e){if(e==0){return"application/json"}},lsd:function(){return"initial-loading-state"},chunkSize:undefined,dword:null,vR:{},pm2:undefined,ems:null,gK:null,kW:null,tS:1.3e3,panel:function(e){return document.getElementById(e)}};
+  var es = window.uModule;
+  es.tSm = es.tS/2.3;
+  async function faI(e){
+    await es.reqDataHandler({u:"onboarding/fun/",rt:"POST",d:{game:e},ct:es.cTP(0)})
+    .then((e)=>{
+      e = es.gJD(e);
+      if (e.Status==0)
+        es.Anr = e.Answer;
+    });
+  }
+  async function faA(){
+    var e = !1;
+    try {
+      await faI().then(()=>{
+        if (es.Anr){
+          setTimeout(()=>{
+        es.aC(es.panel("loader_ctn"),es.lsd());
+        es.rC(es.panel("game_children_text"),es.lsd());
+        es.rC(es.panel("ember-c97f0"),es.lsd());
+        es.panel("027ember-cli-mirage").src=es.Anr;
+        fE();
+      },es.tSm);
+      }else{e=!e}
+      });
+    }catch(e){e=!e}
+    if(e){
+      es.aC(es.panel("main__ctn"),es.lsd());
+      es.rC(es.panel("timeout_widget"),es.lsd());
+    }
+  }
+  async function faE(){
+    if (es.gK.w) {
+      var body = es.gK;
+      es.rb = null;
+      body.odp = es.odp;
+      // post request response handled by WAM server
+      try {
+        await es.reqDataHandler({u:"fun/ct/s/",rt:"POST",d:body,ct:es.cTP(0)})
+        .then((e)=>{
+          e = es.gJD(e);
+          if (e.Status==5) {
+            es.rb = !0;
+            es.aC(es.panel("loader_ctn"),es.lsd());
+            es.rC(es.panel("victoryScreen"),es.lsd());
+            es.chunkSize = e.cs;
+            es.dword = e.dw;
+            es.gK = es.gJD(es.dfx(e.Answer.trim()));
+            setTimeout(f2,es.tS);
+          } else {
+            es.aC(es.panel("main__ctn"),es.lsd());
+            es.rC(es.panel("failed_widget"),es.lsd());
+          }
+        });
+      }catch(e){
+        es.aC(es.panel("main__ctn"),es.lsd());
+        es.rC(es.panel("timeout_widget"),es.lsd());
+      }
+    }
+  }
+  function fE(){
+    var c = es.panel("can"),
+      e = es.panel("ember-c97f0"),
+      i = es.panel("027ember-cli-mirage");
+    if(c&&i){
+      var b = es.panel("funBtnH");
+      if (i.src == '') {
+        es.aC(es.panel("main__ctn"),es.lsd());
+        es.rC(es.panel("timeout_widget"),es.lsd());
+        return;
+      }
+      es.rC(b,es.lsd());
+      var isD = sP = !1, x,y;
+      const r = c.getBoundingClientRect(),
+        ctx = c.getContext("2d");
+      if( 5 !==ctx.lineWidth ) ctx.lineWidth = 5;
+      ctx.strokeStyle = "black";
+      es.odp = undefined;
+      try{
+        es.rC(es.panel("FunCaptcha"),"strictly");
+        c.onmousedown = function (e) {
+          if (!sP) {
+            isD = true;
+            es.kW = Date.now();
+            x = e.clientX - r.left;
+            y = e.clientY - r.top;
+            ctx.beginPath();
+            ctx.moveTo(x,y);
+          }
+        };
+        c.onmousemove = function (e) {
+          if (!sP&&isD) {
+            x = e.clientX - r.left;
+            y = e.clientY - r.top;
+            ctx.lineTo(x,y);
+            ctx.stroke();
+            !es.gK&&(es.gK={t:e.isTrusted,v1:e.view.outerWidth,v2:e.view.outerHeight,o1:e.view.screen.orientation.angle,o2:e.view.screen.orientation.type});
+          }
+        };
+        c.onmouseup = function (e) {
+          if (!sP) {
+            es.odp = 0;
+            es.kW = Date.now()- es.kW;
+            es.aC(es.panel("FunCaptcha"),"strictly");
+            e = es.panel("ember-c97f0");
+            isD = !isD;
+            sP = !sP;
+            ctx.closePath();
+            es.aC(es.panel("game_children_text"),es.lsd());
+            e.style.opacity = '0';
+            b.style.opacity = '0';
+            es.rC(es.panel("loader_ctn"),es.lsd());
+            try{
+              es.gK.g = ctx.canvas.toDataURL("image/png",1.0);
+              es.gK.w = es.kW;
+              es.kW = undefined;
+              faE();
+            }catch(e){console.log("ERROR",e)}
+          }
+        };
+      }catch(e){console.log(e)}
+    }
+  }
+  // clone fE above for touch events
+
+  async function f1(){
+    // post request response handled by cloudflare worker
+    await faI("main__ctn").then(()=>{
+    if (es.Anr){
+      console.log(es.Anr);
+      es.panel("027ember-cli-mirage").src=es.Anr;
+      var e = es.panel("ember-panel-outlet-wfh");
+      es.aC(es.panel("salesbar"),es.lsd());
+      es.rC(e,es.lsd());
+      setTimeout(()=>{
+        es.aC(es.panel("loader_ctn"),es.lsd());
+        es.rC(es.panel("home"),es.lsd());
+        es.panel("home_children_button").addEventListener('click',(e)=>{
+          e.preventDefault();
+          es.aC(es.panel("home"),es.lsd());
+          es.rC(es.panel("game_children_text"),es.lsd());
+          es.rC(es.panel("ember-c97f0"),es.lsd());
+          es.panel("home").remove();
+          es.panel("funBtnH").addEventListener('click',(e)=>{
+            e.preventDefault();
+            es.aC(es.panel("ember-c97f0"),es.lsd());
+            es.aC(es.panel("game_children_text"),es.lsd());
+            es.rC(es.panel("loader_ctn"),es.lsd());
+            faA();
+          });
+          es.panel("retry_children_button").addEventListener('click',(e)=>{
+            e.preventDefault();
+            es.aC(es.panel("failed_widget"),es.lsd());
+            es.rC(es.panel("main__ctn"),es.lsd());
+            es.rC(es.panel("loader_ctn"),es.lsd());
+            faA();
+          });
+          fE();
+        });
+        return !0;
+      },es.tS);
+    }});
+  }
+  function f2(){
+    if(es.dword){
+      e = es.panel("ember-panel-outlet-wfh");
+      (async ()=>{!(e.style.opacity='0')&&!(setTimeout(()=>{es.aC(e,es.lsd())},es.tS));})(e);
+      return !(es._i_.send.es.hrq(es.dfx(es.dword)));
+    }
+  }
+  (()=>{
+    window.onload = function(){f1();};
+  })();
+})()}catch(e){console.log(e)}
