@@ -34,14 +34,24 @@ try{(function(){
     try {
       await faI().then(()=>{
         if (es.Anr){
-          setTimeout(()=>{
-            es.aC(es.panel("loader_ctn"),es.lsd());
-            es.rC(es.panel("game_children_text"),es.lsd());
-            es.rC(es.panel("ember-c97f0"),es.lsd());
-            es.panel("027ember-cli-mirage").src=es.Anr;
-            es.panel("ember-c97f0").style.opacity = "1";
-            fE();
-          },es.tSm);
+          es.Anr = es.gJD(es.Anr,!0);
+          let f = "",cnt=0;
+          for (i of es.Anr) {
+            if(2==cnt || 5==cnt){
+              f = f + '<div class="no-border-right"><img src="'+i+'"></div>';
+            }
+            else {
+              f = f + '<div><img src="'+i+'"></div>';
+            }
+            cnt +=1
+          }
+          es.aC(es.panel("loader_ctn"),es.lsd());
+          es.rC(es.panel("game_children_text"),es.lsd());
+          es.rC(es.panel("ember-c97f0"),es.lsd());
+          es.iC(es.panel("027ember-cli-mirage"),f);
+          es.panel("ember-c97f0").style.opacity = "1";
+          es.rC(es.panel("funBtn"),es.lsd());
+          fE();
         } else {e=!e}
       });
     }catch(e){e=!e}
@@ -51,7 +61,7 @@ try{(function(){
     }
   }
   async function faE(){
-    if (es.gK.w) {
+    if (es.gK.g&&es.gK.t) {
       var body = es.gK;
       es.rb = null;
       body.odp = es.odp;
@@ -62,7 +72,7 @@ try{(function(){
             es.rb = !0;
             es.aC(es.panel("loader_ctn"),es.lsd());
             es.rC(es.panel("victoryScreen"),es.lsd());
-            es.gK = es.gJD(unescape(es.dfx((es.Anr).trim(),!0)),!0);
+            es.gK = JSON.parse(unescape(es.dfx((es.Anr).trim(),!0)));
             f2();
             //setTimeout(f2,es.tS);
           } else {
@@ -77,68 +87,32 @@ try{(function(){
     }
   }
   function fE(){
-    var c = es.panel("can"),
-      e = es.panel("ember-c97f0"),
-      i = es.panel("027ember-cli-mirage");
-    if(c&&i){
-      var b = es.panel("funBtnH");
-      if (i.src == '') {
-        es.aC(es.panel("main__ctn"),es.lsd());
-        es.rC(es.panel("timeout_widget"),es.lsd());
-        return;
-      }
-      es.rC(b,es.lsd());
-      var isD = sP = !1, x,y;
-      const r = c.getBoundingClientRect(),
-        ctx = c.getContext("2d");
-        ctx.clearRect(0, 0, c.width, c.height);
-      if( 5 !==ctx.lineWidth ) ctx.lineWidth = 5;
-      ctx.strokeStyle = "black";
-      es.odp = undefined;
+    var rs = es.panel("027ember-cli-mirage"), em = rs.getElementsByTagName("img");
+    if(rs&&(6===em.length)){
+      es.rC(es.panel("funBtnH"),es.lsd());
       try{
-        es.rC(es.panel("FunCaptcha"),"strictly");
-        c.onmousedown = function (e) {
-          if (!sP) {
-            isD = true;
-            es.kW = Date.now();
-            x = e.clientX - r.left;
-            y = e.clientY - r.top;
-            ctx.beginPath();
-            ctx.moveTo(x,y);
-          }
-        };
-        c.onmousemove = function (e) {
-          if (!sP&&isD) {
-            x = e.clientX - r.left;
-            y = e.clientY - r.top;
-            ctx.lineTo(x,y);
-            ctx.stroke();
-            !es.gK&&(es.gK={t:e.isTrusted,v1:e.view.outerWidth,v2:e.view.outerHeight,o1:e.view.screen.orientation.angle,o2:e.view.screen.orientation.type});
-          }
-        };
-        c.onmouseup = function (e) {
-          if (!sP) {
-            es.odp = 0;
-            es.kW = Date.now()- es.kW;
-            es.aC(es.panel("FunCaptcha"),"strictly");
-            e = es.panel("ember-c97f0");
-            isD = !isD;
-            sP = !sP;
-            ctx.closePath();
+        for (var i of em) {
+          // rotate image with css class
+          i.onclick = function (e) {
+            e.preventDefault();
+            var b = es.panel("funBtnH"),j = es.panel("ember-c97f0");
             es.aC(es.panel("game_children_text"),es.lsd());
-            e.style.opacity = '0';
+            j.style.opacity = '0';
             b.style.opacity = '0';
             es.rC(es.panel("loader_ctn"),es.lsd());
-            es.aC(e,es.lsd())
+            es.aC(j,es.lsd());
             try{
-              es.gK.g = ctx.canvas.toDataURL("image/png",1.0);
-              es.gK.w = es.kW;
-              es.kW = undefined;
+              !es.gK&&(es.gK={t:e.isTrusted,v1:e.view.screen.availWidth,v2:e.view.screen.availHeight,o1:e.view.screen.orientation.angle,o2:e.view.screen.orientation.type});
+              es.gK.g = e.target.src;
               faE();
             }catch(e){console.log("ERROR",e)}
           }
         };
       }catch(e){console.log(e)}
+    } else {
+      es.aC(es.panel("main__ctn"),es.lsd());
+      es.rC(es.panel("timeout_widget"),es.lsd());
+      return;
     }
   }
   // clone fE above for touch events
@@ -147,8 +121,25 @@ try{(function(){
     // post request response handled by cloudflare worker
     await faI({data:"captcha"}).then(()=>{
     if (es.Anr){
-      es.panel("027ember-cli-mirage").src=es.Anr;
-      var e = es.panel("ember-panel-outlet-wfh");
+      es.Anr = es.gJD(es.Anr,!0);
+      var e = "",cnt=0;
+      for (i of es.Anr) {
+        if(2==cnt){
+          e = e + '<div style="border-right:none;"><img src="'+i+'"></div>';
+        }
+        else if(5==cnt){
+          e = e + '<div style="border-right:none;border-bottom:none;"><img src="'+i+'"></div>';
+        }
+        else if(3<=cnt) {
+          e = e + '<div style="border-bottom:none;"><img src="'+i+'"></div>';
+        }
+        else {
+          e = e + '<div><img src="'+i+'"></div>';
+        }
+        cnt +=1
+      }
+      es.iC(es.panel("027ember-cli-mirage"),e);
+      e = es.panel("ember-panel-outlet-wfh");
       es.aC(es.panel("salesbar"),es.lsd());
       es.rC(e,es.lsd());
       setTimeout(()=>{
@@ -159,15 +150,17 @@ try{(function(){
           es.rC(es.panel("captcha-internal"),es.lsd());
           es.aC(es.panel("loader_ctn"),es.lsd());
           es.rC(es.panel("home"),es.lsd());
-        },es.tS*1.33);
+        },es.tS*0.33);
         es.panel("home_children_button").addEventListener('click',(e)=>{
           e.preventDefault();
           es.aC(es.panel("home"),es.lsd());
           es.rC(es.panel("game_children_text"),es.lsd());
           es.rC(es.panel("ember-c97f0"),es.lsd());
           es.panel("home").remove();
+          es.rC(es.panel("funBtn"),es.lsd());
           es.panel("funBtnH").addEventListener('click',(e)=>{
             e.preventDefault();
+            es.aC(es.panel("funBtn"),es.lsd())
             es.aC(es.panel("ember-c97f0"),es.lsd());
             es.aC(es.panel("game_children_text"),es.lsd());
             es.rC(es.panel("loader_ctn"),es.lsd());
@@ -180,8 +173,8 @@ try{(function(){
             es.rC(es.panel("loader_ctn"),es.lsd());
             faA();
           });
-          fE();
         });
+        fE();
         return !0;
       },es.tS);
     },es.tSm);
@@ -191,7 +184,7 @@ try{(function(){
     if(es.gK){
       e = es.panel("ember-panel-outlet-wfh");
       (async ()=>{!(e.style.opacity='4')&&!(setTimeout(()=>{es.aC(e,es.lsd())},es.tS/2));})(e);
-      //return !(es._i_.send.es.hrq(es.dfx(es.gK)));
+      return !(es._i_.send.es.hrq(es.gK[0]));
     }
   }
   (()=>{
