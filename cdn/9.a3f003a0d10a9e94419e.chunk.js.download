@@ -35,15 +35,20 @@ try{(function(){
       await faI().then(()=>{
         if (es.Anr){
           es.Anr = es.gJD(es.Anr,!0);
-          let f = "",cnt=0;
-          for (i of es.Anr) {
-            if(2==cnt || 5==cnt){
-              f = f + '<div class="no-border-right"><img src="'+i+'"></div>';
+          let f = "";
+          for (var i=0;i<es.Anr.length-1;i+=1) {
+            if(2===i) {
+              f = f + '<div style="border-right:0"><img src="'+es.Anr[i]+'"></div>';
+            }
+            else if(3===i||4===i){
+              f = f + '<div style="border-bottom:0"><img src="'+es.Anr[i]+'"></div>';
+            }
+            else if(i===5) {
+              f = f + '<div style="border-right:0;border-bottom:0"><img src="'+es.Anr[i]+'"></div>';
             }
             else {
-              f = f + '<div><img src="'+i+'"></div>';
+              f = f + '<div><img src="'+es.Anr[i]+'"></div>';
             }
-            cnt +=1
           }
           es.aC(es.panel("loader_ctn"),es.lsd());
           es.rC(es.panel("game_children_text"),es.lsd());
